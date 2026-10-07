@@ -1,0 +1,97 @@
+site_name: Manual de Arquitectura de Agentes de IA
+site_description: Modelo, harness, MCP, contexto, identidad y operación de agentes de IA en entornos corporativos
+site_author: Patricio Cabrera
+docs_dir: docs
+copyright: "Manual de estudio — versión septiembre 2026"
+
+theme:
+  name: material
+  language: es
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang: es
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mermaid-zoom.js
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - tables
+  - abbr
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Inicio: index.md
+  - Parte I · Fundamentos:
+      - 01 Anatomía de un sistema agéntico: 01-anatomia.md
+      - 02 HTTP, APIs, JSON-RPC y OAuth: 02-fundamentos-apis.md
+      - 03 Del function calling al agent loop: 03-function-calling-loop.md
+      - 04 Context engineering: 04-context-engineering.md
+  - Parte II · Piezas:
+      - 05 El harness, frameworks y runtimes: 05-harness.md
+      - 06 MCP en profundidad: 06-mcp.md
+      - 07 Topologías reales, dónde corre cada cosa: 07-topologias.md
+      - 08 App en ChatGPT vs harness propio: 08-chatgpt-vs-propio.md
+      - 09 Conocimiento, ingesta y RAG: 09-rag.md
+  - Parte III · Gobernanza y operación:
+      - 10 Identidad y autorización: 10-identidad.md
+      - 11 Patrones, de un agente a multi-agente: 11-patrones.md
+      - 12 Observabilidad, evals, guardrails y FinOps: 12-operacion.md
+      - 13 Local vs cloud: 13-local-vs-cloud.md
+      - 14 Mapa de mercado (septiembre 2026): 14-mercado.md
+  - Parte IV · Aplicación:
+      - 15 Caso de estudio AgroCorp: 15-caso-agrocorp.md
+      - 16 Lab, roadmap de implementación: 16-lab.md
+  - Glosario: glosario.md

@@ -1,0 +1,63 @@
+/* Diagramas Mermaid: se ven más grandes por defecto y se pueden ampliar */
+
+/* Material renderiza el <svg> de Mermaid dentro de un shadow root
+   CERRADO en `.mermaid` (el host). Un selector como `.mermaid svg`
+   nunca puede pisar ese límite, así que estilamos el host en su lugar. */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  cursor: zoom-in;
+}
+
+/* Overlay de pantalla completa para ver el diagrama ampliado */
+.mermaid-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+  animation: mermaid-zoom-fade-in 0.15s ease-out;
+}
+
+/* El diagrama ampliado es el mismo host `.mermaid` movido acá por JS
+   (no un clon: clonar perdería el contenido del shadow root cerrado).
+   El JS lo escala y lo mueve con `transform` (zoom con scroll, paneo
+   arrastrando); acá solo lo enmarcamos y le damos cursor de agarre. */
+.mermaid-zoom-overlay .mermaid {
+  flex: none;
+  cursor: grab;
+  touch-action: none;
+  background: var(--md-default-bg-color, #fff);
+  border-radius: 0.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+}
+
+.mermaid-zoom-overlay .mermaid:active {
+  cursor: grabbing;
+}
+
+.mermaid-zoom-hint {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  color: #fff;
+  font-family: var(--md-text-font-family, sans-serif);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+@keyframes mermaid-zoom-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
