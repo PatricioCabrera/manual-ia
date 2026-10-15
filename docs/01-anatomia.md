@@ -20,31 +20,69 @@ Cuando algo sale mal (una fuga de datos, un costo disparado, una respuesta inven
 
 ## El mapa completo
 
+Este es el mapa de **anatomía pura**: componentes, sin productos. Cada caja existe en cualquier implementación, la operes vos o un proveedor.
+
 ```mermaid
 flowchart TB
-    U[Usuario] -->|SSO / token| FE[Interfaz<br/>web, Slack, Teams, ChatGPT]
+    U[Usuario] -->|login| IDP[Proveedor de identidad]
+    U -->|token| FE[Interfaz]
     FE --> H
 
     subgraph H[Harness]
-        direction TB
-        L[Agent loop] --- CE[Ensamblado de contexto]
-        L --- MEM[Memoria y sesión]
-        L --- PERM[Permisos y límites]
-        L --- MC[Cliente MCP]
+        direction LR
+        L["Agent loop<br/>contexto · memoria y sesión<br/>permisos, límites y guardrails"] --- MC[Cliente MCP]
     end
 
-    H -->|request de inferencia| GW[Model gateway]
-    GW --> M[(Modelo<br/>Anthropic / Bedrock / Vertex)]
+    H -->|inferencia| GW[Model gateway]
+    GW --> M[(Modelo)]
 
-    MC -->|MCP| S1[Servidor MCP propio]
-    MC -->|MCP| MG[MCP gateway / registry]
-    MG --> S2[MCPs de terceros]
-
+    MC -->|MCP + token del usuario| MG[MCP gateway / registry]
+    MG --> S1[Servidor MCP propio]
+    MG --> S2[Servidor MCP de terceros]
     S1 --> DB[(Bases y APIs de negocio)]
-    H --> KB[(Knowledge base / vector store)]
+    S2 --> SAAS[(SaaS de terceros)]
+
+    H -->|retrieval| KB[(Knowledge base)]
     ING[Pipeline de ingesta] --> KB
 
     H -.traces.-> OBS[Observabilidad]
+    S1 -.traces.-> OBS
+    GW -.uso y costo.-> OBS
+```
+
+Dos lecturas del mapa:
+
+- **Los gateways son capas de gobierno opcionales, y aplican igual a todo lo que está detrás.** El model gateway centraliza cuotas y costo de *todos* los modelos. El MCP gateway centraliza autenticación, políticas y auditoría de *todos* los servidores MCP, propios o de terceros. Con un solo servidor MCP y un solo modelo, el harness se conecta directo y el gateway sobra (capítulo 07).
+- **La identidad viaja con cada salto.** El token del usuario entra por la interfaz, el harness lo propaga por MCP y el servidor que toca los datos lo valida. El capítulo 10 desarrolla ese recorrido.
+
+### El mismo mapa sobre AWS
+
+Misma forma, cada caja con su servicio gestionado. La equivalencia en ChatGPT Enterprise y en infraestructura propia (servidores o contenedores) está en la tabla de mapeo del [capítulo 15](15-servicios-gestionados.md#la-tabla-de-mapeo).
+
+```mermaid
+flowchart TB
+    U[Usuario] -->|login| IDP["Entra ID<br/>OIDC directo o vía Cognito"]
+    U -->|token| FE["Interfaz<br/>S3 + CloudFront, Teams o Slack"]
+    FE --> H
+
+    subgraph H["AgentCore Runtime · Strands o LangGraph"]
+        direction LR
+        L["Agent loop<br/>contexto · AgentCore Memory<br/>límites + Bedrock Guardrails"] --- MC[Cliente MCP]
+    end
+
+    H -->|Converse API| GW["Bedrock<br/>inference profiles, cuotas, IAM"]
+    GW --> M[(Modelo en Bedrock)]
+
+    MC -->|MCP + token del usuario| MG["AgentCore Gateway<br/>+ Policy Cedar"]
+    MG --> S1["Servidor MCP propio<br/>AgentCore Runtime o ECS"]
+    MG --> S2["MCP de terceros<br/>credenciales en AgentCore Identity"]
+    S1 --> DB[(RDS o Aurora con RLS)]
+    S2 --> SAAS[(SaaS de terceros)]
+
+    H -->|retrieve| KB[("Bedrock Knowledge Bases<br/>S3 Vectors u OpenSearch")]
+    ING["Documentos en S3<br/>+ sync de la Knowledge Base"] --> KB
+
+    H -.traces.-> OBS["AgentCore Observability<br/>OpenTelemetry + CloudWatch"]
     S1 -.traces.-> OBS
     GW -.uso y costo.-> OBS
 ```
