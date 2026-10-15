@@ -18,14 +18,14 @@ Cada capítulo sigue la misma estructura:
 
 | Sección | Para qué |
 |---|---|
-| **Concepto** | Qué es, en una definición que puedas repetir en una entrevista |
+| **Concepto** | Qué es, en una definición corta y precisa |
 | **Por qué existe** | Qué problema resuelve. Si no entendés el problema, el mecanismo no se fija |
 | **Cómo funciona** | La mecánica, con diagramas y ejemplos |
 | **Antipatrones** | Los errores que ves en implementaciones reales |
 | **Recall** | Preguntas con respuesta plegada |
 
 !!! warning "La regla de las preguntas de recall"
-    Las respuestas están plegadas a propósito. **Escribí tu respuesta antes de abrirla**, en papel o en tu vault de Obsidian. Leer la respuesta sin intentarla produce sensación de entendimiento, no memoria. El esfuerzo de recuperar es lo que consolida.
+    Las respuestas están plegadas a propósito. **Escribí tu respuesta antes de abrirla**, en papel o en tus notas. Leer la respuesta sin intentarla produce sensación de entendimiento, no memoria. El esfuerzo de recuperar es lo que consolida.
 
 ### Ruta de lectura
 
@@ -44,23 +44,25 @@ flowchart LR
     K --> L[12 Operación]
     L --> M[13 Local vs cloud]
     M --> N[14 Mercado]
-    N --> O[15 Caso AgroCorp]
-    O --> P[16 Lab]
+    N --> S[15 Del concepto al servicio]
+    S --> O[16 Caso AgroCorp]
+    O --> P[17 Lab]
 ```
 
 - **Si solo tenés una tarde:** 01, 04, 06 y 07.
 - **Si venís flojo en APIs:** no saltees el 02. MCP, OAuth y function calling se apoyan en él.
-- **Antes de una entrevista:** 01, 10, 11 y el glosario.
+- **Si vas a diseñar sobre ChatGPT Enterprise o AWS:** 07, 08 y 15. El 15 es la tabla de referencia para tener abierta.
+- **Repaso rápido:** 01, 10, 11 y el glosario.
 
 ### Convenciones
 
-- **Términos técnicos en inglés** (harness, retrieval, chunking, tool call) porque así los vas a escuchar en equipos de US y EU. La primera aparición tiene la explicación en español.
-- **Fechas:** la mecánica (capítulos 1 a 13) es estable. El **capítulo 14 está fechado** y hay que revisarlo cada trimestre.
+- **Términos técnicos en inglés** (harness, retrieval, chunking, tool call) porque así aparecen en la documentación de los proveedores, en las APIs y en el código. La primera aparición tiene la explicación en español.
+- **Fechas:** la mecánica (capítulos 1 a 13) es estable. Los **capítulos 14 y 15 están fechados** (productos y servicios) y hay que revisarlos cada trimestre.
 - **Versión de MCP:** el manual usa la revisión **2026-07-28** de la especificación. Mucho material en internet todavía describe la revisión 2025-11-25 (con handshake `initialize` y sesiones). El capítulo 06 explica las dos.
 
 ## Diagnóstico de entrada
 
-Estas cuatro preguntas quedaron abiertas en la conversación que originó el manual. Contestalas **ahora, antes de leer**, y guardá la respuesta. Al terminar el capítulo 10, volvé y compará. La diferencia entre las dos versiones es tu progreso medido.
+Estas cuatro preguntas cubren los huecos más comunes al empezar. Contestalas **ahora, antes de leer**, y guardá la respuesta. Al terminar el capítulo 10, volvé y compará. La diferencia entre las dos versiones es tu progreso medido.
 
 ??? question "1. Tu MCP propio corre con una service account de solo lectura sobre toda la base. ¿Qué ataque concreto permite que el usuario B vea ventas del cliente de A, aunque el system prompt lo prohíba?"
     **Prompt injection directa o indirecta, amplificada por un *confused deputy*.**
@@ -102,4 +104,5 @@ Estas cuatro preguntas quedaron abiertas en la conversación que originó el man
 - [ ] Diseñar la propagación de identidad del usuario desde el SSO hasta la fila de la base.
 - [ ] Justificar agente único vs routing vs orquestador con costos.
 - [ ] Explicar qué ganás y qué perdés publicando una app en ChatGPT frente a un harness propio.
-- [ ] Presentar la arquitectura de referencia del caso AgroCorp a management y a un panel técnico.
+- [ ] Mapear cada componente a ChatGPT Enterprise, a Bedrock + AgentCore o a infraestructura propia (servidores o contenedores), y saber qué hay que construir al moverlo.
+- [ ] Presentar la arquitectura de referencia del caso AgroCorp a negocio y a un comité de arquitectura.

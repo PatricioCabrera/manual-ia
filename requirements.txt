@@ -1,3 +1,5 @@
-# MkDocs 2.0 rompe la compatibilidad con Material: se fija la rama 1.x
-mkdocs>=1.6,<2
-mkdocs-material>=9.7,<10
+# Versiones fijadas. MkDocs 2.0 rompe la compatibilidad con Material: se queda en 1.x
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+pymdown-extensions==12.3
+Markdown==3.11.1

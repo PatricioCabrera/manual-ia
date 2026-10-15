@@ -1,6 +1,6 @@
-# 16 · Lab: roadmap de implementación
+# 17 · Lab: roadmap de implementación
 
-Este capítulo es el plan para **construir una versión reducida de AgroCorp** por tu cuenta, de la laptop a AWS con Terraform. No es código completo: es la secuencia, la estructura y el criterio de "terminado" de cada etapa. Construirlo es el paso que convierte este manual en experiencia demostrable.
+Este capítulo es el plan para **construir una versión reducida de AgroCorp** por tu cuenta, de la laptop a AWS con Terraform. No es código completo: es la secuencia, la estructura y el criterio de "terminado" de cada etapa. Construirlo es la forma de validar en la práctica cada concepto del manual.
 
 ## Principio del lab
 
@@ -12,7 +12,7 @@ Cada etapa agrega **una sola capa** del capítulo 01 y tiene un criterio de sali
 agro-agent-platform/
 ├── README.md                     # qué es, diagrama, cómo correrlo, decisiones
 ├── docs/
-│   ├── adr/                      # una ADR por decisión (formato del capítulo 15)
+│   ├── adr/                      # una ADR por decisión (formato del capítulo 16)
 │   └── architecture.md
 ├── mcp-server/                   # servidor MCP agro-sales (Python)
 │   ├── src/
@@ -22,7 +22,7 @@ agro-agent-platform/
 │   │   └── audit.py
 │   ├── tests/
 │   │   ├── test_tools.py
-│   │   └── test_authz.py         # matriz de autorización del capítulo 15
+│   │   └── test_authz.py         # matriz de autorización del capítulo 16
 │   └── Dockerfile
 ├── agent/                        # harness propio (Strands o Claude Agent SDK)
 │   ├── src/
@@ -101,7 +101,7 @@ services:
 ### Etapa 4 · Autorización en la capa de datos
 
 - **Qué:** RLS en Postgres (`CREATE POLICY` con `current_setting('app.zona')`) o en SQL Server con `SESSION_CONTEXT`, y el servidor fijando el contexto por request.
-- **Criterio de salida:** `test_authz.py` reproduce la **matriz de autorización del capítulo 15** (Ana, Bruno, Carla, Diego, sin grupo) y pasa. Incluí un test que simule reuso de conexión del pool entre usuarios distintos.
+- **Criterio de salida:** `test_authz.py` reproduce la **matriz de autorización del capítulo 16** (Ana, Bruno, Carla, Diego, sin grupo) y pasa. Incluí un test que simule reuso de conexión del pool entre usuarios distintos.
 
 ```sql
 -- Equivalente en PostgreSQL
@@ -134,18 +134,19 @@ CREATE POLICY ventas_por_zona ON ventas
 ### Etapa 8 · Publicar en un asistente
 
 - **Qué:** exponer el servidor por HTTPS público (ALB + WAF + certificado ACM) y conectarlo como **conector personalizado en Claude** o **app en modo desarrollador de ChatGPT**.
+- **Variante gestionada:** desplegar el mismo servidor MCP en **AgentCore Runtime** con authorizer JWT y conectarlo a ChatGPT Enterprise (arquetipo A del capítulo 15). El código del servidor no cambia; cambia dónde corre y quién valida el token.
 - **Criterio de salida:** un usuario de prueba se loguea vía OAuth y consulta datos de su zona desde el asistente; otro usuario no ve los datos del primero.
 
-## Definición de "terminado" para portfolio
+## Definición de "terminado"
 
 - [ ] README con diagrama, problema, decisiones y cómo correrlo en 5 minutos (`docker compose up`).
 - [ ] ADRs de las decisiones principales (transporte, identidad, RLS, topología).
 - [ ] Tests de autorización visibles en CI.
 - [ ] Un reporte de evals con resultados reales.
 - [ ] Captura del trace completo.
-- [ ] Video de 3 minutos: la misma pregunta hecha por dos usuarios con alcances distintos, y el trace que lo explica.
+- [ ] Una demo de 3 minutos: la misma pregunta hecha por dos usuarios con alcances distintos, y el trace que lo explica.
 
-La línea de CV que habilita este lab: *"Diseñé e implementé una plataforma de agentes de IA sobre AWS con MCP, propagación de identidad OIDC y Row-Level Security, con observabilidad OpenTelemetry de punta a punta y evals en CI."* Cada palabra de esa línea queda respaldada por un artefacto del repositorio.
+Cada ítem es un artefacto verificable del repositorio, no una afirmación.
 
 ## Recall
 

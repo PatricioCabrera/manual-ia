@@ -1,6 +1,6 @@
-# 15 · Caso de estudio: AgroCorp
+# 16 · Caso de estudio: AgroCorp
 
-Este capítulo integra todo el manual en una arquitectura de referencia completa. **AgroCorp es una empresa ficticia**: el caso se puede publicar como portfolio sin exponer información de ninguna organización real.
+Este capítulo integra todo el manual en una arquitectura de referencia completa. **AgroCorp es una empresa ficticia**: el caso se puede compartir sin exponer información de ninguna organización real.
 
 ## El enunciado (el prompt refinado)
 
@@ -19,7 +19,7 @@ Así se formula el pedido cuando querés que un humano o un modelo diseñe una p
 >
 > **Restricciones:** AWS-first, infraestructura como código con Terraform, costo mensual estimado, análisis de amenazas (prompt injection, supply chain de MCP, exfiltración).
 >
-> **Formato:** documento de arquitectura con diagramas, presentable a management y a un panel técnico.
+> **Formato:** documento de arquitectura con diagramas, presentable a negocio y a un comité de arquitectura.
 
 Los entregables 1, 2 y 6 son los capítulos 01, 14 y 13. Este capítulo resuelve **3, 4 y 5**.
 

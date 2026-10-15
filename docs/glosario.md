@@ -1,6 +1,6 @@
 # Glosario
 
-Definiciones cortas para repasar antes de una reunión o entrevista. Entre paréntesis, el capítulo donde se desarrolla.
+Definiciones cortas para repaso rápido. Entre paréntesis, el capítulo donde se desarrolla.
 
 **A2A (Agent-to-Agent)**
 : Protocolo abierto para que un agente delegue tareas en otro agente autónomo. Complementa a MCP: MCP conecta agentes con herramientas; A2A, agentes con agentes. (06, 11)
@@ -131,6 +131,9 @@ Definiciones cortas para repasar antes de una reunión o entrevista. Entre paré
 **PKCE**
 : Extensión de OAuth que impide canjear un código de autorización interceptado. Obligatoria en OAuth 2.1. (02)
 
+**Plugin (ChatGPT)**
+: Paquete distribuible en un workspace de ChatGPT que combina apps (servidores MCP: datos, auth, acciones) y skills (flujo de trabajo). (15)
+
 **Prompt caching**
 : El proveedor reutiliza el procesamiento de un prefijo idéntico del prompt; la lectura cacheada cuesta ~10% del input normal. (04)
 
@@ -155,6 +158,9 @@ Definiciones cortas para repasar antes de una reunión o entrevista. Entre paré
 **Runtime**
 : Dónde se ejecuta el proceso del harness: laptop, Lambda, ECS, AgentCore Runtime. (05)
 
+**Runtime con protocolo MCP (AgentCore)**
+: Modo de AgentCore Runtime que hospeda un servidor MCP propio (Streamable HTTP en `:8000/mcp`) con validación de JWT de entrada. Es la forma gestionada de publicar el servidor MCP de una app de ChatGPT. (15)
+
 **Sandbox**
 : Entorno aislado donde el agente ejecuta código o comandos. (05)
 
@@ -162,7 +168,7 @@ Definiciones cortas para repasar antes de una reunión o entrevista. Entre paré
 : Mecanismo de SQL Server para asociar pares clave-valor a una sesión, usable por políticas de RLS. (10)
 
 **Skill**
-: Paquete de instrucciones y archivos que el agente carga solo cuando la tarea lo requiere (progressive disclosure). (04)
+: Paquete de instrucciones y archivos (`SKILL.md`) que el agente carga solo cuando la tarea lo requiere (progressive disclosure). Formato abierto: lo usan ChatGPT, Claude y Codex. Orienta el flujo, nunca autoriza. (04, 15)
 
 **SSE (Server-Sent Events)**
 : Formato de streaming HTTP (`text/event-stream`) para mandar eventos del servidor al cliente. (02)

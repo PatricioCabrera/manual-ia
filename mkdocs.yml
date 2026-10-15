@@ -1,8 +1,12 @@
 site_name: Manual de Arquitectura de Agentes de IA
 site_description: Modelo, harness, MCP, contexto, identidad y operación de agentes de IA en entornos corporativos
 site_author: Patricio Cabrera
+site_url: https://patriciocabrera.com/manual-ia/
+repo_url: https://github.com/PatricioCabrera/manual-ia
+repo_name: PatricioCabrera/manual-ia
+edit_uri: edit/main/docs/
 docs_dir: docs
-copyright: "Manual de estudio — versión septiembre 2026"
+copyright: "Manual de estudio — versión octubre 2026"
 
 theme:
   name: material
@@ -22,9 +26,11 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Modo claro
+  icon:
+    repo: fontawesome/brands/github
   features:
+    - navigation.tabs
     - navigation.sections
-    - navigation.expand
     - navigation.top
     - navigation.footer
     - navigation.indexes
@@ -38,6 +44,17 @@ theme:
 plugins:
   - search:
       lang: es
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: warn
+    unrecognized_links: warn
 
 extra_css:
   - stylesheets/extra.css
@@ -66,6 +83,9 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -92,6 +112,7 @@ nav:
       - 13 Local vs cloud: 13-local-vs-cloud.md
       - 14 Mapa de mercado (septiembre 2026): 14-mercado.md
   - Parte IV · Aplicación:
-      - 15 Caso de estudio AgroCorp: 15-caso-agrocorp.md
-      - 16 Lab, roadmap de implementación: 16-lab.md
+      - 15 Del concepto al servicio (ChatGPT, Bedrock, AgentCore): 15-servicios-gestionados.md
+      - 16 Caso de estudio AgroCorp: 16-caso-agrocorp.md
+      - 17 Lab, roadmap de implementación: 17-lab.md
   - Glosario: glosario.md
